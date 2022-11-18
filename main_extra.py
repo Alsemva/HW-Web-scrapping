@@ -1,7 +1,7 @@
 import bs4
 import requests
 from fake_headers import Headers
-KEYWORDS = ['интерфейс', 'фронтенд', 'микроэлектроника', 'прокси']
+from constanta import KEYWORDS, URL
 
 
 def get_date_title_url(soup, url):
@@ -14,7 +14,6 @@ def get_date_title_url(soup, url):
         full_href = f"{url[:-7]}{href}"
         full_article_soup = get_scrapp(full_href)
         full_article = full_article_soup.find(class_="article-formatted-body").find("div").text
-        # print(full_href)
         for keyword in KEYWORDS:
             if (keyword in title) or (keyword in description) or (keyword in full_article):
                 print(f"{date[:-7]} - {title} - {full_href}")
@@ -24,9 +23,9 @@ def get_date_title_url(soup, url):
 
 def get_scrapp(url):
     header = Headers(
-        browser="chrome",  # Generate only Chrome UA
-        os="win",  # Generate ony Windows platform
-        headers=True  # generate misc headers
+        browser="chrome",
+        os="win",
+        headers=True
     )
     response = requests.get(url, headers=header.generate())
     text = response.text
@@ -34,9 +33,8 @@ def get_scrapp(url):
 
 
 def main():
-    url = 'https://habr.com/ru/all'
-    soup = get_scrapp(url)
-    print(get_date_title_url(soup, url))
+    soup = get_scrapp(URL)
+    print(get_date_title_url(soup, URL))
 
 
 if __name__ == '__main__':

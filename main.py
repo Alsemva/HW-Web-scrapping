@@ -1,8 +1,7 @@
 import bs4
 import requests
 from fake_headers import Headers
-KEYWORDS = ['интерфейс', 'фронтенд', 'микроэлектроника', 'java']
-URL = 'https://habr.com/ru/all'
+from constanta import KEYWORDS, URL
 
 
 def get_date_title_url(soup):
@@ -22,9 +21,9 @@ def get_date_title_url(soup):
 
 def get_scrapp():
     header = Headers(
-        browser="chrome",  # Generate only Chrome UA
-        os="win",  # Generate ony Windows platform
-        headers=True  # generate misc headers
+        browser="chrome",
+        os="win",
+        headers=True
     )
     response = requests.get(URL, headers=header.generate())
     text = response.text
